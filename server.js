@@ -7,13 +7,25 @@
  *************************/
 const express = require("express")
 const env = require("dotenv").config()
+const path = require("path")
 const app = express()
 const static = require("./routes/static")
+
+/* ***********************
+ * View Engine
+ *************************/
+app.set("view engine", "ejs")
+app.set("views", path.join(__dirname, "views"))
 
 /* ***********************
  * Routes
  *************************/
 app.use(static)
+
+// Index route
+app.get("/", (req, res) => {
+  res.render("index", { title: "CSE Motors - Home" })
+})
 
 /* ***********************
  * Local Server Information
