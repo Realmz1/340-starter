@@ -1,16 +1,45 @@
-// utilities/index.js
+const invModel = require("../models/inventory-model")
 
+/* ***************************
+ *  Build the navigation bar
+ * ************************** */
+async function getNav() {
+  try {
+    const data = await invModel.getClassifications()
+    let list = "<ul>"
+    list += '<li><a href="/" title="Home page">Home</a></li>'
+    data.rows.forEach((row) => {
+      list += `
+        <li>
+          <a href="/inv/type/${row.classification_id}" 
+             title="See our inventory of ${row.classification_name} vehicles">
+            ${row.classification_name}
+          </a>
+        </li>`
+    })
+    list += "</ul>"
+    return list
+  } catch (error) {
+    console.error("Error building navigation:", error)
+    return "<ul><li><a href='/'>Home</a></li></ul>"
+  }
+}
+
+/* ***************************
+ *  Build the vehicle detail view
+ * ************************** */
 function buildDetailView(vehicle) {
   const price = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD"
+    currency: "USD",
   }).format(vehicle.inv_price)
 
   const miles = new Intl.NumberFormat("en-US").format(vehicle.inv_miles)
 
   return `
     <section class="vehicle-detail">
-      <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
+      <img src="${vehicle.inv_image}" 
+           alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
       <div class="vehicle-info">
         <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h2>
         <p><strong>Price:</strong> ${price}</p>
