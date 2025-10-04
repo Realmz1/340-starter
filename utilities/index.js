@@ -1,10 +1,9 @@
+// utilities/index.js
 const invModel = require("../models/inventory-model")
 
 /* ***************************
  *  Build the navigation bar
  * ************************** */
-const invModel = require("../models/inventory-model")
-
 async function getNav() {
   try {
     const data = await invModel.getClassifications()
@@ -26,8 +25,6 @@ async function getNav() {
     return "<ul><li><a href='/'>Home</a></li></ul>"
   }
 }
-
-module.exports = { getNav, buildDetailView }
 
 /* ***************************
  *  Build the vehicle detail view
@@ -55,4 +52,7 @@ function buildDetailView(vehicle) {
   `
 }
 
+/* ***************************
+ *  Module Exports
+ * ************************** */
 module.exports = { getNav, buildDetailView }
