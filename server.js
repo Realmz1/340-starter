@@ -22,6 +22,11 @@ app.set("views", path.join(__dirname, "views"))
  *************************/
 app.use(static)
 
+// Inventory routes
+const inventoryRoute = require("./routes/inventoryRoute")
+app.use("/inv", inventoryRoute)
+
+
 // Index route
 app.get("/", (req, res) => {
   res.render("index", { title: "CSE Motors - Home" })

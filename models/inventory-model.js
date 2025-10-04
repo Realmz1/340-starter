@@ -11,4 +11,13 @@ async function getVehicleById(invId) {
   }
 }
 
-module.exports = { getVehicleByClassificationId, getVehicleById }
+async function getClassifications() {
+  try {
+    const data = await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+module.exports = { getClassifications, getVehicleByClassificationId, getVehicleById }

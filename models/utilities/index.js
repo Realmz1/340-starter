@@ -3,6 +3,8 @@ const invModel = require("../models/inventory-model")
 /* ***************************
  *  Build the navigation bar
  * ************************** */
+const invModel = require("../models/inventory-model")
+
 async function getNav() {
   try {
     const data = await invModel.getClassifications()
@@ -12,7 +14,7 @@ async function getNav() {
       list += `
         <li>
           <a href="/inv/type/${row.classification_id}" 
-             title="See our inventory of ${row.classification_name} vehicles">
+             title="See our ${row.classification_name} inventory">
             ${row.classification_name}
           </a>
         </li>`
@@ -20,10 +22,12 @@ async function getNav() {
     list += "</ul>"
     return list
   } catch (error) {
-    console.error("Error building navigation:", error)
+    console.error("Error building nav:", error)
     return "<ul><li><a href='/'>Home</a></li></ul>"
   }
 }
+
+module.exports = { getNav, buildDetailView }
 
 /* ***************************
  *  Build the vehicle detail view
