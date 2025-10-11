@@ -1,0 +1,14 @@
+<header class="site-header" role="banner">
+  <div class="inner">
+    <div class="brand"><a href="/">CSE Motors</a></div>
+    <div class="account-links">
+      <% if (locals.loggedin) { %>
+        <a class="account-link" href="/account/" aria-label="Account Management">Welcome <%=
+            locals.accountData.account_firstname %></a>
+        <a class="account-link" href="/account/logout" aria-label="Logout">Logout</a>
+        <% } else { %>
+          <a class="account-link" href="/account/login" aria-label="My Account">My Account</a>
+          <% } %>
+    </div>
+  </div>
+</header>

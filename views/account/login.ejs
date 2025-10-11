@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head', { title }) %>
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="page">
+        <%- include('../partials/header') %>
+            <%- include('../partials/nav', { nav }) %>
+
+                <main id="main-content">
+                    <h1>
+                        <%= title %>
+                    </h1>
+
+                    <% if (locals.notice) { %>
+                        <div class="flash notice">
+                            <%= notice %>
+                        </div>
+                        <% } %>
+
+                            <% if (errors) { %>
+                                <ul class="errors">
+                                    <% errors.forEach(error=> { %>
+                                        <li>
+                                            <%= error.msg %>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                                <% } %>
+
+                                    <form id="loginForm" action="/account/login" method="post">
+                                        <fieldset>
+                                            <legend>Login</legend>
+
+                                            <label for="account_email">Email:</label>
+                                            <input type="email" id="account_email" name="account_email" required
+                                                value="<%= locals.account_email || '' %>">
+
+                                            <label for="account_password">Password:</label>
+                                            <input type="password" id="account_password" name="account_password"
+                                                required
+                                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+                                                title="Password must be at least 12 characters and contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character">
+
+                                            <button type="submit">Login</button>
+                                        </fieldset>
+                                    </form>
+
+                                    <p>Don't have an account? <a href="/account/register">Register here</a></p>
+                </main>
+
+                <%- include('../partials/footer') %>
+    </div>
+    <script src="/js/script.js" defer></script>
+</body>
+
+</html>

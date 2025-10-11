@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head', { title }) %>
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="page">
+        <%- include('../partials/header') %>
+            <%- include('../partials/nav', { nav }) %>
+
+                <main id="main-content">
+                    <h1>
+                        <%= title %>
+                    </h1>
+
+                    <% if (locals.notice) { %>
+                        <div class="flash notice">
+                            <%= notice %>
+                        </div>
+                        <% } %>
+
+                            <% if (errors) { %>
+                                <ul class="errors">
+                                    <% errors.forEach(error=> { %>
+                                        <li>
+                                            <%= error.msg %>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                                <% } %>
+
+                                    <form action="/review/update" method="post">
+                                        <fieldset>
+                                            <legend>Edit Your Review</legend>
+
+                                            <label for="review_rating">Rating:</label>
+                                            <select id="review_rating" name="review_rating" required>
+                                                <option value="5" <%=review_rating==5 ? 'selected' : '' %>>★★★★★ (5 -
+                                                    Excellent)</option>
+                                                <option value="4" <%=review_rating==4 ? 'selected' : '' %>>★★★★☆ (4 -
+                                                    Very Good)</option>
+                                                <option value="3" <%=review_rating==3 ? 'selected' : '' %>>★★★☆☆ (3 -
+                                                    Good)</option>
+                                                <option value="2" <%=review_rating==2 ? 'selected' : '' %>>★★☆☆☆ (2 -
+                                                    Fair)</option>
+                                                <option value="1" <%=review_rating==1 ? 'selected' : '' %>>★☆☆☆☆ (1 -
+                                                    Poor)</option>
+                                            </select>
+
+                                            <label for="review_text">Your Review:</label>
+                                            <textarea id="review_text" name="review_text" rows="5" required
+                                                minlength="10" maxlength="1000"><%= review_text %></textarea>
+                                            <p class="form-note">Minimum 10 characters, maximum 1000 characters</p>
+
+                                            <input type="hidden" name="review_id" value="<%= review_id %>">
+
+                                            <button type="submit">Update Review</button>
+                                            <a href="/review/my-reviews" class="btn-cancel">Cancel</a>
+                                        </fieldset>
+                                    </form>
+                </main>
+
+                <%- include('../partials/footer') %>
+    </div>
+    <script src="/js/script.js" defer></script>
+</body>
+
+</html>
